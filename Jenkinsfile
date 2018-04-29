@@ -1,6 +1,11 @@
-node { 
-    stage('Stage 1') {
-        echo 'Hello World' 
-        echo env.PATH
+node {
+    stage('Build') {
+        echo 'Building....'
+    }
+    stage('Test') {
+        echo 'Building....'
+    }
+    stage('Deploy') {
+        echo 'Deploying....'
     }
 }
