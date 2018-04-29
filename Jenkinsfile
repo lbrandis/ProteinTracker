@@ -1,25 +1,10 @@
 node {
-    stage('Build') {
-        echo 'Checkout....'
-        checkout(
-            [$class: 'GitSCM', 
-             branches: [[name: '*/master']], 
-             doGenerateSubmoduleConfigurations: false, 
-             extensions: [], 
-             submoduleCfg: [],  
-             userRemoteConfigs: [[url: 'https://github.com/lbrandis/ProteinTracker']]
-            ])
-        
-        echo 'Building....'
-
-        sh 'mvn clean install'
-
-
-    }
-    stage('Test') {
-        echo 'Testing....'
-    }
-    stage('Deploy') {
-        echo 'Deploying....'
+    /* Requires the Docker Pipeline plugin to be installed */
+    docker.image('maven:3-alpine').inside('-v $HOME/.m2:/root/.m2') 
+    {
+        stage('Build') 
+        {
+            sh 'mvn -B -DskipTests clean install'
+        }
     }
 }
